@@ -1,1 +1,1 @@
-/Users/wisangeom/dev-util
+chrome_driver_path = "/Users/wisangeom/dev-util/chromedriver"
