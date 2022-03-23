@@ -17,10 +17,7 @@ event_div = driver.find_element(By.XPATH, menu_path)
 date_list = event_div.find_elements(By.CSS_SELECTOR, "time")
 title_list = event_div.find_elements(By.CSS_SELECTOR, "a")
 
-event_dict = {}
-
-for i in range(len(date_list)):
-    event_dict[f"{i}"] = {date_list[i].text: title_list[i].text}
+event_dict = {f"{i}": {date_list[i].text: title_list[i].text} for i in range(len(date_list))}
 
 print(event_dict)
 
