@@ -1,3 +1,6 @@
+import time
+import selenium
+
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
@@ -8,20 +11,38 @@ chrome_driver_path = "/Users/wisangeom/dev-util/chromedriver"
 
 s = Service(chrome_driver_path)
 driver = webdriver.Chrome(service=s)
-url = 'http://secure-retreat-92358.herokuapp.com/'
+url = 'https://orteil.dashnet.org/experiments/cookie/'
 driver.get(url)
 
-fname_box = driver.find_element(By.NAME, "fName")
-fname_box.send_keys("wisang")
+cookie = driver.find_element(By.ID, "cookie")
+store = driver.find_elements(By.CSS_SELECTOR, "#store div")
 
-lname_box = driver.find_element(By.NAME, "lName")
-lname_box.send_keys("eom")
+inner_loop_end = time.time() + 5
+outer_loop_end = time.time() + 60
 
-email_box = driver.find_element(By.NAME, "email")
-email_box.send_keys("abc@abc.com")
+while time.time() < outer_loop_end:
+    while time.time() < inner_loop_end:
+        cookie.click()
 
-send_button = driver.find_element(By.CSS_SELECTOR, "form button")
-send_button.click()
+    store = driver.find_elements(By.CSS_SELECTOR, "#store div")
+    for i in range(len(store)-1, -1, -1):
+        if store[i].get_attribute("class") == "":
+            print(f"{store[i].text} is clicked")
+            store[i].click()
+            break
+
+
+# for item in store:
+#     try:
+#         item_list.append(item.text.split("-")[1].strip())
+#     except IndexError:
+#         pass
+
+
+
+
+
+
 
 # count = driver.find_element(By.CSS_SELECTOR, "#articlecount a")
 # arts_link = driver.find_element(By.LINK_TEXT, "The arts")
