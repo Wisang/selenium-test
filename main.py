@@ -11,13 +11,13 @@ driver = webdriver.Chrome(service=s)
 url = 'https://www.python.org/'
 driver.get(url)
 
-menu_path = '//*[@id="content"]/div/section/div[3]/div[2]/div/ul'
-event_div = driver.find_element(By.XPATH, menu_path)
+# menu_path = '//*[@id="content"]/div/section/div[3]/div[2]/div/ul'
+# event_div = driver.find_element(By.XPATH, menu_path)
 
-date_list = event_div.find_elements(By.CSS_SELECTOR, "time")
-title_list = event_div.find_elements(By.CSS_SELECTOR, "a")
+date_list = driver.find_elements(By.CSS_SELECTOR, ".event-widget time")
+title_list = driver.find_elements(By.CSS_SELECTOR, ".event-widget li a")
 
-event_dict = {f"{i}": {date_list[i].text: title_list[i].text} for i in range(len(date_list))}
+event_dict = {f"{i}": {f"date: {date_list[i].text}": f"name: {title_list[i].text}"} for i in range(len(date_list))}
 
 print(event_dict)
 
