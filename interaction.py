@@ -21,14 +21,13 @@ cookie = driver.find_element(By.ID, "cookie")
 inner_loop_end = time.time() + 5
 outer_loop_end = time.time() + 60*2
 
-while time.time() < outer_loop_end:
-    while time.time() < inner_loop_end:
+
+def click_for(seconds):
+    while time.time() < seconds:
         cookie.click()
 
-    inner_loop_end = inner_loop_end + 5
 
-    store = driver.find_elements(By.CSS_SELECTOR, "#store div")
-
+def click_item_in(item_list):
     for i in range(len(store)-1, -1, -1):
         try:
             if store[i].get_attribute("class") == "":
@@ -37,6 +36,13 @@ while time.time() < outer_loop_end:
                 break
         except selenium.common.exceptions.StaleElementReferenceException:
             pass
+
+
+while time.time() < outer_loop_end:
+    click_for(inner_loop_end)
+    inner_loop_end = inner_loop_end + 5
+    store = driver.find_elements(By.CSS_SELECTOR, "#store div")
+    click_item_in(store)
 
 cps = driver.find_element(By.ID, "cps")
 
