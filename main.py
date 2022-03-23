@@ -17,7 +17,7 @@ driver.get(url)
 date_list = driver.find_elements(By.CSS_SELECTOR, ".event-widget time")
 title_list = driver.find_elements(By.CSS_SELECTOR, ".event-widget li a")
 
-event_dict = {f"{i}": {f"date: {date_list[i].text}": f"name: {title_list[i].text}"} for i in range(len(date_list))}
+event_dict = {f"{i}": {f"date: {date_list[i].text}", f"name: {title_list[i].text}"} for i in range(len(date_list))}
 
 print(event_dict)
 
