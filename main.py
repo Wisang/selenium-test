@@ -1,16 +1,41 @@
-import webdriver_manager
-
 from selenium import webdriver
+
 from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 
-chrome_driver_path = "D:\dev-tools\chromedriver.exe"
+# chrome_driver_path = "D:\dev-tools\chromedriver.exe"
+chrome_driver_path = "/Users/wisangeom/dev-util/chromedriver"
+
 s = Service(chrome_driver_path)
 driver = webdriver.Chrome(service=s)
-# driver = webdriver.Chrome(executable_path=chrome_driver_path)
-driver.get('https://www.amazon.com/Fitbit-Advanced-Management-Tracking-Graphite/dp/B09BXQ4HMB/ref=sr_1_3?crid=2ZKPHWC7E8LIL&keywords=fitbit&qid=1647961526&sprefix=fitbit%2Caps%2C265&sr=8-3')
-price = driver.find_element(By.XPATH, '//*[@id="olp_feature_div"]/div[2]/span/a/span[2]')
+url = 'https://www.python.org/'
+driver.get(url)
+# event_div = driver.find_element(By.CLASS_NAME, 'event-widget')
 
-print(price.text)
+menu_path = '//*[@id="content"]/div/section/div[3]/div[2]/div/ul'
+event_div = driver.find_element(By.XPATH, menu_path)
+
+date_list = event_div.find_elements(By.CSS_SELECTOR, "time")
+title_list = event_div.find_elements(By.CSS_SELECTOR, "a")
+
+event_dict = {}
+
+for i in range(len(date_list)):
+    event_dict[f"{i}"] = {date_list[i].text: title_list[i].text}
+
+print(event_dict)
+
+# event_dict = {}
+#
+# for item in event_div:
+#     event_dict[item.find_element(By.CSS_SELECTOR, "time").text] = item.find_element(By.CSS_SELECTOR, "a").text
+
+# print(event_dict)
+# date_list = event_div.find_elements(By.CSS_SELECTOR, "time")
+# title_list = event_div.find_elements(By.CSS_SELECTOR, "a")
+
+# for tittle in title_list:
+#     print(tittle.text)
+
+driver.quit()
 
